@@ -13,6 +13,9 @@ from yts_scraper import YTSScraper
 
 # Try to import libtorrent, but handle gracefully if it fails
 try:
+    !python -m pip install lbry-libtorrent
+    !apt install python3-libtorrent
+ 
     import libtorrent as lt
     LIBTORRENT_AVAILABLE = True
     print("✓ libtorrent loaded successfully")
