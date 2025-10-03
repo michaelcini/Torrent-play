@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torrent Player - YTS.mx</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+    <meta name="theme-color" content="#2b2b2b">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='icon-192.png') }}">
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="logo">🎬 Torrent Player</h1>
+                <div class="header-controls">
+                    <div class="search-container">
+                        <input type="text" id="searchInput" placeholder="Search movies..." class="search-input">
+                        <button id="searchBtn" class="search-btn">🔍</button>
+                    </div>
+                    <select id="qualitySelect" class="quality-select">
+                        <option value="2160p">4K</option>
+                        <option value="1080p">1080p</option>
+                        <option value="720p" selected>720p</option>
+                        <option value="480p">480p</option>
+                    </select>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Movies Panel -->
+            <section class="movies-panel" id="moviesPanel">
+                <div class="movies-header">
+                    <h2>Movies</h2>
+                    <button id="loadMoreBtn" class="load-more-btn">Load More</button>
+                </div>
+                
+                <div class="movies-grid" id="moviesGrid">
+                    <!-- Movies will be loaded here -->
+                </div>
+                
+                <div class="loading" id="loadingIndicator" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Loading movies...</p>
+                </div>
+            </section>
+
+            <!-- Video Player Panel -->
+            <section class="video-panel" id="videoPanel" style="display: none;">
+                <div class="video-container">
+                    <video id="videoPlayer" controls preload="metadata" class="video-player">
+                        Your browser does not support the video tag.
+                    </video>
+                    
+                    <div class="video-controls">
+                        <div class="video-info">
+                            <h3 id="videoTitle">No video selected</h3>
+                            <p id="videoDetails"></p>
+                        </div>
+                        
+                        <div class="torrent-status" id="torrentStatus">
+                            <div class="status-item">
+                                <span class="status-label">Status:</span>
+                                <span class="status-value" id="statusValue">Ready</span>
+                            </div>
+                            <div class="status-item">
+                                <span class="status-label">Progress:</span>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" id="progressFill"></div>
+                                </div>
+                                <span class="progress-text" id="progressText">0%</span>
+                            </div>
+                            <div class="status-item">
+                                <span class="status-label">Speed:</span>
+                                <span class="status-value" id="speedValue">0 KB/s</span>
+                            </div>
+                            <div class="status-item">
+                                <span class="status-label">Peers:</span>
+                                <span class="status-value" id="peersValue">0</span>
+                            </div>
+                        </div>
+                        
+                        <div class="control-buttons">
+                            <button id="pauseBtn" class="control-btn" disabled>⏸ Pause</button>
+                            <button id="resumeBtn" class="control-btn" disabled>▶ Resume</button>
+                            <button id="stopBtn" class="control-btn" disabled>⏹ Stop</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="movie-details" id="movieDetails">
+                    <!-- Movie details will be loaded here -->
+                </div>
+            </section>
+        </main>
+
+        <!-- Mobile Navigation -->
+        <nav class="mobile-nav">
+            <button class="nav-btn active" data-panel="movies">
+                <span class="nav-icon">🎬</span>
+                <span class="nav-label">Movies</span>
+            </button>
+            <button class="nav-btn" data-panel="video">
+                <span class="nav-icon">▶️</span>
+                <span class="nav-label">Player</span>
+            </button>
+        </nav>
+
+        <!-- Toast Notifications -->
+        <div id="toastContainer" class="toast-container"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
